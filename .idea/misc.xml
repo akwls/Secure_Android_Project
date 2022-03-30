@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/user/AndroidStudioProjects/SecureProject/app/src/main/res/drawable/background_button_fill.xml" value="0.2805" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/SecureProject/app/src/main/res/drawable/background_button_outline.xml" value="0.2805" />
         <entry key="..\:/Users/user/AndroidStudioProjects/SecureProject/app/src/main/res/drawable/background_linear.xml" value="0.492" />
         <entry key="..\:/Users/user/AndroidStudioProjects/SecureProject/app/src/main/res/layout/activity_main.xml" value="0.17617753623188406" />
       </map>

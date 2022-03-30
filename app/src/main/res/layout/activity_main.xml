@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_margin="10dp"
@@ -14,7 +13,8 @@
         android:orientation="vertical"
         android:padding="10dp"
         android:background="@drawable/background_linear"
-        android:elevation="10dp">
+        android:elevation="10dp"
+        android:id="@+id/linear_text">
         <TextView
             android:layout_marginTop="5dp"
             android:id="@+id/txt_key"
@@ -47,63 +47,112 @@
             android:inputType="text" />
         <TextView
             android:layout_marginTop="5dp"
-            android:id="@+id/txt_cypher_text"
+            android:id="@+id/txt_encrypt_text"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="암호키"
+            android:text="암호문"
             android:textSize="15sp"
             android:textColor="#000000" />
-        <EditText
+        <TextView
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cypher_text"
+            android:id="@+id/encrypt_text"
             android:textSize="15sp"
-            android:textColor="#000000"
-            android:inputType="text" />
+            android:textColor="#000000" />
         <TextView
             android:layout_marginTop="5dp"
             android:id="@+id/txt_decryption_text"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="암호키"
+            android:text="복호문"
             android:textSize="15sp"
             android:textColor="#000000" />
-        <EditText
+        <TextView
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/decryption_text"
             android:textSize="15sp"
-            android:textColor="#000000"
-            android:inputType="text" />
+            android:textColor="#000000" />
     </LinearLayout>
     <LinearLayout
+        android:layout_below="@+id/linear_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_margin="10dp">
         <Button
+            android:textColor="#fff"
+            android:background="@drawable/background_button_fill"
+            android:id="@+id/btn_reset"
             android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="초기화"/>
         <Button
+            android:textColor="#fff"
+            android:background="@drawable/background_button_fill"
+            android:id="@+id/btn_process"
             android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="과정 보기"/>
+            android:text="과정 보기"
+            android:enabled="false" />
         <Button
+            android:textColor="#fff"
+            android:background="@drawable/background_button_fill"
+            android:id="@+id/btn_encrypt"
             android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="암호화"/>
 
+        <Button
+            android:textColor="#fff"
+            android:background="@drawable/background_button_fill"
+            android:visibility="gone"
+            android:id="@+id/btn_decrypt"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="복호화"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="end">
+        <Button
+            android:stateListAnimator="@null"
+            android:background="@drawable/background_button_outline"
+            android:id="@+id/btn_recent"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            android:textColor="#000"
+            android:text="최근 내역" />
+        <Button
+            android:stateListAnimator="@null"
+            android:textColor="#000"
+            android:background="@drawable/background_button_outline"
+            android:id="@+id/btn_desc"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            android:text="다중 문자 치환이란?" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
