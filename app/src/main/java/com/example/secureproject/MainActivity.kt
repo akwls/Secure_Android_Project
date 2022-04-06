@@ -27,6 +27,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnRecent: Button
     lateinit var btnDesc: Button
 
+    lateinit var playFair: ArrayList<CharArray>
+    lateinit var encPlayFair: ArrayList<CharArray>
+
     var alphabetBoard = Array(5,{CharArray(5)})
     var oddFlag = false
     var zCheck = ""
@@ -54,9 +57,12 @@ class MainActivity : AppCompatActivity() {
         btnRecent = findViewById(R.id.btn_recent)
         btnDesc = findViewById(R.id.btn_desc)
 
+        var encrypted: String
+        var plainStr: String
+
         btnEncrypt.setOnClickListener {
             var keyStr = edtKey.text.toString()
-            var plainStr = plainText.text.toString()
+            plainStr = plainText.text.toString()
             Log.d("keyStr", keyStr)
             Log.d("plainStr", plainStr)
 
@@ -81,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                 i++
             }
 
-            var encrypted = encrypt(keyStr, plainStr);
+            encrypted = encrypt(keyStr, plainStr);
 
             txtEncryptText.visibility = View.VISIBLE
             encryptText.visibility = View.VISIBLE
@@ -99,6 +105,13 @@ class MainActivity : AppCompatActivity() {
             decryptionText.visibility = View.VISIBLE
 
             btnDecrypt.isEnabled = false
+        }
+
+        btnProcess.setOnClickListener {
+            val dialog = ProcessDialog(alphabetBoard, playFair, encPlayFair)
+            dialog.show(
+                supportFragmentManager, "암호화 과정 보기"
+            )
         }
 
         btnReset.setOnClickListener {
@@ -125,8 +138,8 @@ class MainActivity : AppCompatActivity() {
 
     }
     fun encrypt(keyStr:String, plainStr:String) : String {
-        var playFair = ArrayList<CharArray>()
-        var encPlayFair = ArrayList<CharArray>()
+        playFair = ArrayList<CharArray>()
+        encPlayFair = ArrayList<CharArray>()
         var x1 = 0
         var x2 = 0
         var y1 = 0
@@ -134,6 +147,7 @@ class MainActivity : AppCompatActivity() {
         var encStr = ""
 
         var i: Int = 0
+
         while(i < plainStr.length) {
             var tmpArr = CharArray(2)
             tmpArr[0] = plainStr[i]
