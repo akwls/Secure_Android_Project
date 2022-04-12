@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var playFair: ArrayList<CharArray>
     lateinit var encPlayFair: ArrayList<CharArray>
+    lateinit var decPlayFair: ArrayList<CharArray>
 
     var alphabetBoard = Array(5,{CharArray(5)})
     var oddFlag = false
@@ -57,11 +58,13 @@ class MainActivity : AppCompatActivity() {
         btnRecent = findViewById(R.id.btn_recent)
         btnDesc = findViewById(R.id.btn_desc)
 
-        var encrypted: String
-        var plainStr: String
+        var encrypted = ""
+        var plainStr = ""
+        var keyStr = ""
+        var decrypted = ""
 
         btnEncrypt.setOnClickListener {
-            var keyStr = edtKey.text.toString()
+            keyStr = edtKey.text.toString()
             plainStr = plainText.text.toString()
             Log.d("keyStr", keyStr)
             Log.d("plainStr", plainStr)
@@ -86,6 +89,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 i++
             }
+            Log.d("blankCheck", blankCheck)
 
             encrypted = encrypt(keyStr, plainStr);
 
@@ -105,6 +109,29 @@ class MainActivity : AppCompatActivity() {
             decryptionText.visibility = View.VISIBLE
 
             btnDecrypt.isEnabled = false
+
+            var idx = 0
+            while(idx < encrypted.length) {
+                if(encrypted[idx] == ' ') {
+                    encrypted = encrypted.substring(0, idx)+encrypted.substring(idx+1, encrypted.length)
+                }
+                idx++
+            }
+
+            Log.d("encrypted", encrypted)
+            decrypted = decrypt(keyStr, encrypted, zCheck)
+            Log.d("decrypted", decrypted)
+
+            idx = 0
+            while(idx < decrypted.length) {
+                if(blankCheck[idx] == '1') {
+                    decrypted = decrypted.substring(0, idx) + " " + decrypted.substring(idx, decrypted.length)
+                }
+                idx++
+            }
+
+            decryptionText.text = decrypted
+
         }
 
         btnProcess.setOnClickListener {
@@ -120,8 +147,10 @@ class MainActivity : AppCompatActivity() {
 
             txtEncryptText.visibility = View.GONE
             encryptText.text = ""
+            encryptText.visibility = View.GONE
             txtDecryptionText.visibility = View.GONE
             decryptionText.text = ""
+            decryptionText.visibility = View.GONE
 
             btnProcess.isEnabled = false
             btnDecrypt.visibility = View.GONE
@@ -204,6 +233,73 @@ class MainActivity : AppCompatActivity() {
 
         return encryptResult
 
+    }
+
+    fun decrypt(keyStr: String, encrypted: String, zCheck: String) : String {
+        decPlayFair = ArrayList<CharArray>()
+        playFair = ArrayList<CharArray>()
+        var x1 = 0;
+        var x2 = 0
+        var y1 = 0
+        var y2 = 0
+        var decStr = ""
+
+        var lengthOddFlag = 1
+
+        for(i in 0 until encrypted.length step 2) {
+            var tmpArr = CharArray(2)
+            tmpArr[0] = encrypted[i]
+            tmpArr[1] = encrypted[i+1]
+            playFair.add(tmpArr)
+        }
+
+        for(i in 0 until playFair.size) {
+            var tmpArr = CharArray(2)
+            for(j in 0 until alphabetBoard.size) {
+                for(k in 0 until alphabetBoard[j].size) {
+                    if(alphabetBoard[j][k] == playFair[i][0]) {
+                        x1 = j
+                        y1 = k
+                    }
+                    if(alphabetBoard[j][k] == playFair.get(i)[1]) {
+                        x2 = j
+                        y2 = k
+                    }
+                }
+            }
+            if(x1 == x2) {
+                tmpArr[0] = alphabetBoard[x1][(y1+4)%5]
+                tmpArr[1] = alphabetBoard[x2][(y2+4)%5]
+            }
+            else if(y1 == y2) {
+                tmpArr[0] = alphabetBoard[(x1+4)%5][y1]
+                tmpArr[1] = alphabetBoard[(x2+4)%5][y2]
+            }
+            else {
+                tmpArr[0] = alphabetBoard[x2][y1]
+                tmpArr[1] = alphabetBoard[x1][y2]
+            }
+            decPlayFair.add(tmpArr)
+        }
+
+        for(i in 0 until decPlayFair.size) {
+            if(i != decPlayFair.size -1 && decPlayFair.get(i)[1] == 'x' && decPlayFair.get(i)[0] == decPlayFair.get(i+1)[0]) {
+                decStr += decPlayFair.get(i)[0]
+            }
+            else {
+                decStr += decPlayFair.get(i)[0] + "" + decPlayFair.get(i)[1]
+            }
+        }
+
+        for(i in 0 until zCheck.length) {
+            if(zCheck[i] == '1') {
+                decStr = decStr.substring(0, i) + 'z' + decStr.substring(i+1, decStr.length)
+            }
+        }
+
+        if(oddFlag) decStr = decStr.substring(0, decStr.length-1)
+
+        return decStr
     }
 
     fun setBoard(keyStr: String) {
