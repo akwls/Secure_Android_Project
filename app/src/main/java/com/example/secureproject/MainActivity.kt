@@ -8,6 +8,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.secureproject.database.Encrypt
+import com.example.secureproject.database.EncryptDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     lateinit var edtKey: EditText
@@ -31,6 +39,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var encPlayFair: ArrayList<CharArray>
     lateinit var decPlayFair: ArrayList<CharArray>
 
+    lateinit var db: EncryptDatabase
+
     var alphabetBoard = Array(5,{CharArray(5)})
     var oddFlag = false
     var zCheck = ""
@@ -39,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         title = "3104"
+
+        db = EncryptDatabase.getInstance(this)
 
         var blankCheck = ""
 
@@ -102,6 +114,12 @@ class MainActivity : AppCompatActivity() {
 
 
             encryptText.text = encrypted
+
+            CoroutineScope(Dispatchers.Main).launch {
+                async(Dispatchers.Default) {
+                    db.encryptDAO().insert(Encrypt(plainStr, encrypted))
+                }.await()
+            }
         }
 
         btnDecrypt.setOnClickListener {
