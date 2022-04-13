@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -34,10 +35,11 @@ class ProcessDialog(var alphabetBoard: Array<CharArray>, var playFair: ArrayList
                 for(j in alphabetBoard[i].indices) {
                     val txt = TextView(context)
                     txt.text = alphabetBoard[i][j].toString()
-                    val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    val lp = LinearLayout.LayoutParams(100, 100)
                     txt.layoutParams = lp
-                    txt.textSize = 15.0f
+                    txt.textSize = 20.0f
                     txt.gravity = Gravity.CENTER
+                    txt.setBackgroundResource(R.drawable.background_process_table)
 
                     alphabetGrid.addView(txt)
 

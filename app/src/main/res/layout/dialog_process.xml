@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:padding="10dp">
     <GridLayout
+        android:background="@drawable/background_process_table"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
         android:layout_width="wrap_content"
@@ -22,7 +23,6 @@
         android:textSize="15sp"
         android:textColor="#000000" />
     <TextView
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="15sp"
@@ -30,13 +30,13 @@
         android:id="@+id/mapping_plain_txt" />
 
     <TextView
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="치환된 암호문"
         android:textSize="15sp"
         android:textColor="#000000" />
     <TextView
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="15sp"

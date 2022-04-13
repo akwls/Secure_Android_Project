@@ -64,8 +64,8 @@ class MainActivity : AppCompatActivity() {
         var decrypted = ""
 
         btnEncrypt.setOnClickListener {
-            keyStr = edtKey.text.toString()
-            plainStr = plainText.text.toString()
+            keyStr = edtKey.text.toString().trim()
+            plainStr = plainText.text.toString().trim()
             Log.d("keyStr", keyStr)
             Log.d("plainStr", plainStr)
 
