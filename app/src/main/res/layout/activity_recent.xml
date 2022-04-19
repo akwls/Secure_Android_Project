@@ -13,10 +13,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn_delete"
+        android:backgroundTint="#93A5DE"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"
-        android:src="@drawable/bin"/>
+        android:src="@drawable/bin"
+        app:borderWidth="0dp"/>
 
 
 </RelativeLayout>

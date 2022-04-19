@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -78,48 +79,53 @@ class MainActivity : AppCompatActivity() {
         btnEncrypt.setOnClickListener {
             keyStr = edtKey.text.toString().trim()
             plainStr = plainText.text.toString().trim()
-            Log.d("keyStr", keyStr)
-            Log.d("plainStr", plainStr)
 
-            setBoard(keyStr)
-
-            var i:Int =0
-            while(i<plainStr.length) {
-                if (plainStr[i] == ' ') //공백제거
-                {
-                    plainStr = plainStr.substring(0, i) + plainStr.substring(i + 1, plainStr.length)
-                    blankCheck += 10
-                } else {
-                    blankCheck += 0
+            if(keyStr.isNotBlank() && plainStr.isNotBlank()) {
+                setBoard(keyStr)
+                var i:Int =0
+                while(i<plainStr.length) {
+                    if (plainStr[i] == ' ') //공백제거
+                    {
+                        plainStr = plainStr.substring(0, i) + plainStr.substring(i + 1, plainStr.length)
+                        blankCheck += 10
+                    } else {
+                        blankCheck += 0
+                    }
+                    if (plainStr[i] === 'z') //z를 q로 바꿔줘서 처리함.
+                    {
+                        plainStr = plainStr.substring(0, i) + 'q' + plainStr.substring(i + 1, plainStr.length)
+                        zCheck += 1
+                    } else {
+                        zCheck += 0
+                    }
+                    i++
                 }
-                if (plainStr[i] === 'z') //z를 q로 바꿔줘서 처리함.
-                {
-                    plainStr = plainStr.substring(0, i) + 'q' + plainStr.substring(i + 1, plainStr.length)
-                    zCheck += 1
-                } else {
-                    zCheck += 0
+                Log.d("blankCheck", blankCheck)
+
+                encrypted = encrypt(keyStr, plainStr);
+
+                txtEncryptText.visibility = View.VISIBLE
+                encryptText.visibility = View.VISIBLE
+
+                btnProcess.isEnabled = true
+                btnEncrypt.visibility = View.GONE
+                btnDecrypt.visibility = View.VISIBLE
+
+
+                encryptText.text = encrypted
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    async(Dispatchers.Default) {
+                        db.encryptDAO().insert(Encrypt(plainText.text.toString().trim(), encrypted))
+                    }.await()
                 }
-                i++
             }
-            Log.d("blankCheck", blankCheck)
-
-            encrypted = encrypt(keyStr, plainStr);
-
-            txtEncryptText.visibility = View.VISIBLE
-            encryptText.visibility = View.VISIBLE
-
-            btnProcess.isEnabled = true
-            btnEncrypt.visibility = View.GONE
-            btnDecrypt.visibility = View.VISIBLE
-
-
-            encryptText.text = encrypted
-
-            CoroutineScope(Dispatchers.Main).launch {
-                async(Dispatchers.Default) {
-                    db.encryptDAO().insert(Encrypt(plainStr, encrypted))
-                }.await()
+            else {
+                Toast.makeText(applicationContext, "암호키와 평문을 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
+
+
+
         }
 
         btnDecrypt.setOnClickListener {
@@ -173,6 +179,10 @@ class MainActivity : AppCompatActivity() {
             btnProcess.isEnabled = false
             btnDecrypt.visibility = View.GONE
             btnEncrypt.visibility = View.VISIBLE
+
+            edtKey.requestFocus()
+
+
         }
 
         btnRecent.setOnClickListener {
@@ -341,15 +351,8 @@ class MainActivity : AppCompatActivity() {
 
         for (i in 0 until alphabetBoard.size) {
             for (j in 0 until alphabetBoard[i].size) {
-                alphabetBoard[i][j] = keyForSet[keyLengthCount++];
+                alphabetBoard[i][j] = keyForSet[keyLengthCount++]
             }
-        }
-
-        for (i in 0 until alphabetBoard.size) {
-            for (j in 0 until alphabetBoard[i].size) {
-                print(alphabetBoard[i][j].toString() + "-")
-            }
-            println()
         }
     }
 }

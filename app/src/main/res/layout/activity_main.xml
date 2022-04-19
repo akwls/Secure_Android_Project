@@ -24,12 +24,14 @@
             android:textSize="15sp"
             android:textColor="#000000" />
         <EditText
+            android:textCursorDrawable="@drawable/edittext_cursor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edt_key"
             android:textSize="15sp"
             android:textColor="#000000"
-            android:inputType="text" />
+            android:inputType="text"
+            android:backgroundTint="#93A5DE"/>
         <TextView
             android:layout_marginTop="5dp"
             android:id="@+id/txt_plain_text"
@@ -39,12 +41,14 @@
             android:textSize="15sp"
             android:textColor="#000000" />
         <EditText
+            android:textCursorDrawable="@drawable/edittext_cursor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/plain_text"
             android:textSize="15sp"
             android:textColor="#000000"
-            android:inputType="text" />
+            android:inputType="text"
+            android:backgroundTint="#93A5DE" />
         <TextView
             android:layout_marginTop="5dp"
             android:id="@+id/txt_encrypt_text"
