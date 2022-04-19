@@ -179,6 +179,7 @@ class MainActivity : AppCompatActivity() {
             btnProcess.isEnabled = false
             btnDecrypt.visibility = View.GONE
             btnEncrypt.visibility = View.VISIBLE
+            btnDecrypt.isEnabled = true
 
             edtKey.requestFocus()
 

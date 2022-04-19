@@ -34,7 +34,10 @@ class ProcessDialog(var alphabetBoard: Array<CharArray>, var playFair: ArrayList
             for(i in alphabetBoard.indices) {
                 for(j in alphabetBoard[i].indices) {
                     val txt = TextView(context)
-                    txt.text = alphabetBoard[i][j].toString()
+                    if(alphabetBoard[i][j].toString().equals("q")) {
+                        txt.text = alphabetBoard[i][j].toString() + "/z"
+                    }
+                    else txt.text = alphabetBoard[i][j].toString()
                     val lp = LinearLayout.LayoutParams(100, 100)
                     txt.layoutParams = lp
                     txt.textSize = 20.0f
