@@ -3,6 +3,7 @@ package com.example.secureproject
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.secureproject.database.Encrypt
@@ -35,6 +36,7 @@ class RecentActivity : AppCompatActivity() {
                     recyclerView.adapter = adapter
                     findViewById<FloatingActionButton>(R.id.btn_delete).setOnClickListener {
                         CoroutineScope(Dispatchers.Main).launch {
+                            Toast.makeText(applicationContext, "최근 내역을 모두 삭제합니다.", Toast.LENGTH_SHORT).show()
                             async(Dispatchers.IO) {
                                 db.encryptDAO().deleteAll()
                             }.await()

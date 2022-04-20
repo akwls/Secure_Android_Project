@@ -7,11 +7,12 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "encrypt")
 class Encrypt(
-    var plainText: String?, var encryptText: String?,
+    var keyText: String?, var plainText: String?, var encryptText: String?,
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readValue(Long::class.java.classLoader) as? Long
@@ -19,6 +20,7 @@ class Encrypt(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(keyText)
         parcel.writeString(plainText)
         parcel.writeString(encryptText)
         parcel.writeValue(id)

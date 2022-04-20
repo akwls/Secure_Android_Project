@@ -6,15 +6,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.secureproject.database.Encrypt
+import org.w3c.dom.Text
 
 class EncryptAdapter(private val datalist: List<Encrypt>): RecyclerView.Adapter<EncryptAdapter.EncryptItemViewHolder>() {
     class EncryptItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         lateinit var encrypt: Encrypt
+        val keyText = view.findViewById<TextView>(R.id.key_text)
         val plainText = view.findViewById<TextView>(R.id.plain_text)
         val encryptText = view.findViewById<TextView>(R.id.encrypt_text)
 
         fun bind(encrypt: Encrypt) {
             this.encrypt = encrypt
+            keyText.text = encrypt.keyText
             plainText.text = encrypt.plainText
             encryptText.text = encrypt.encryptText
         }
